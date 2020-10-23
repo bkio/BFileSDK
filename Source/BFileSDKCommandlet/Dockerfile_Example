@@ -1,0 +1,33 @@
+FROM adamrehn/ue4-minimal:4.25.3 AS builder
+
+RUN mkdir -p /tmp/project
+RUN chown -R ue4:ue4 /tmp/project
+
+# You can copy the entire project or copy one by one of the files and folders that you want from the source and plugins.
+# COPY --chown=ue4:ue4 . /tmp/project
+COPY --chown=ue4:ue4 ./Config /tmp/project/Config
+COPY --chown=ue4:ue4 ./Source /tmp/project/Source
+COPY --chown=ue4:ue4 ./Plugins/BFileSDK /tmp/project/Plugins/BFileSDK
+COPY --chown=ue4:ue4 ./Plugins/BUtilities /tmp/project/Plugins/BUtilities
+COPY --chown=ue4:ue4 ./Plugins/BHttpClientLib /tmp/project/Plugins/BHttpClientLib
+COPY --chown=ue4:ue4 ./Plugins/BZipLib /tmp/project/Plugins/BZipLib
+
+# If you have an engine plugins that you don't want to copy to the docker image, you can use that way
+COPY --chown=ue4:ue4 Project.uproject.backend /tmp/project/Project.uproject
+
+COPY --chown=ue4:ue4 run_commandlet.sh /tmp/project
+
+RUN chmod +x /tmp/project/run_commandlet.sh
+
+WORKDIR /tmp/project
+
+# BuildCookRun (If needed)
+# RUN /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh BuildCookRun -project=/tmp/project/Project.uproject -noP4 -platform=Linux -clientconfig=Development -serverconfig=Development -Compile -Build -SkipCook -SkipCookOnTheFly
+# GenerateProjectFiles (If needed)
+# RUN /home/ue4/UnrealEngine/Engine/Build/BatchFiles/Linux/RunMono.sh /home/ue4/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe -projectfiles "/tmp/project/Project.uproject"
+
+RUN /home/ue4/UnrealEngine/Engine/Build/BatchFiles/Linux/RunMono.sh /home/ue4/UnrealEngine/Engine/Binaries/DotNET/UnrealBuildTool.exe Linux Development -project="/tmp/project/Project.uproject" -game -engine -progress -TargetType=Editor
+
+ENTRYPOINT ["./run_commandlet.sh"]
+
+CMD [ "NULL" ]

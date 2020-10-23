@@ -1,0 +1,48 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "A File SDK suitable for transferring triangulated CAD files and rendering them in real-time and editor-time",
+	"Description": "",
+	"Category": "BPlugins",
+	"CreatedBy": "Burak Kara",
+	"CreatedByURL": "https://burak.io",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "BFileSDK",
+			"Type": "Runtime",
+			"LoadingPhase": "PostDefault"
+		},
+		{
+			"Name": "BFileSDKEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
+		},
+		{
+			"Name": "BFileSDKCommandlet",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "BUtilities",
+			"Enabled":  true
+		},
+		{
+			"Name": "BZipLib",
+			"Enabled":  true
+		},
+		{
+			"Name": "BHttpClientLib",
+			"Enabled":  true
+		}
+	]   
+}

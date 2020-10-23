@@ -1,0 +1,8 @@
+- Create a Docker Image based on adamrehn/ue4-minimal docker image. You can create your own image and find the document about that https://docs.adamrehn.com/ue4-docker/building-images/available-container-images.
+- Move Dockerfile_Example to the project directory; rename it to be Dockerfile
+	- Change FROM adamrehn/ue4-minimal:4.25.3 AS builder to your base docker image
+	- Change Project.uproject occurences with your {project_name}.uproject
+- Move run_commandlet.sh to the project directory.
+	- Change Project.uproject occurences with your {project_name}.uproject
+- You can call this commandlet like this;
+	- docker run -rm your_docker_repo/ue4_optimizer http://yourlinkwhichprovidesdownloaduploadurls.com
